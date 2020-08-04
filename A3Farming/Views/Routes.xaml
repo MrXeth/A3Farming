@@ -1,0 +1,41 @@
+﻿<UserControl x:Class="A3Farming.Views.Routes"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:A3Farming.Views"
+             mc:Ignorable="d" 
+             d:DesignHeight="450" d:DesignWidth="800">
+    <UserControl.Resources>
+        <CollectionViewSource x:Key="ComboView" Source="{Binding VehicleSelection.VehicleVMs}" />
+    </UserControl.Resources>
+    <StackPanel>
+        <ComboBox DataContext="{Binding VehicleSelection}" 
+                  SelectedValue="{Binding SelectedVehicle}"
+                  ItemsSource="{Binding Source={StaticResource ComboView}}">
+            <ComboBox.ItemTemplate>
+                <DataTemplate>
+                    <TextBlock Text="{Binding Name}" />
+                </DataTemplate>
+            </ComboBox.ItemTemplate>
+
+        </ComboBox>
+        <DataGrid x:Name="Data"
+              ItemsSource="{Binding RouteVMs}" AutoGenerateColumns="False"
+              AddingNewItem="Data_AddingNewItem">
+            <DataGrid.ContextMenu>
+                <ContextMenu>
+                    <MenuItem Click="MenuItem_Click" Header="Remove Route" />
+                </ContextMenu>
+            </DataGrid.ContextMenu>
+            <DataGrid.Columns>
+                <DataGridTextColumn Header="Name" Width="2*" Binding="{Binding Name}" />
+                <DataGridTextColumn Header="Distance" Width="*" Binding="{Binding Distance}" />
+                <DataGridTextColumn Header="Time" Width="*" Binding="{Binding TimeSpan}"/>
+                <DataGridTextColumn Header="Item Price" Width="*" Binding="{Binding ItemPrice}" />
+                <DataGridTextColumn Header="Proceeds/Km" Width="*" Binding="{Binding ProceedsPerKm}" IsReadOnly="True"/>
+                <DataGridTextColumn Header="Proceeds" Width="*" Binding="{Binding Proceeds}" IsReadOnly="True"/>
+            </DataGrid.Columns>
+        </DataGrid>
+    </StackPanel>
+</UserControl>
